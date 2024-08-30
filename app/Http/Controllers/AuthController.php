@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request): string
     {
         $credentials = $request->all(['email', 'password']);
         $token = auth('api')->attempt($credentials);
@@ -21,5 +21,8 @@ class AuthController extends Controller
 
     public function refresh() {}
 
-    public function me() {}
+    public function me(): object
+    {
+        return response()->json(auth()->user());
+    }
 }
