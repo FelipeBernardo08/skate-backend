@@ -17,4 +17,12 @@ class skater extends Model
         'address_city',
         'address_neighborhood'
     ];
+
+    public function createSkater($skater): array
+    {
+        return self::create([
+            'fk_user' => $skater['id'],
+            'name' => $skater['name']
+        ])->toArray();
+    }
 }

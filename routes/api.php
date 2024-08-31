@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SkaterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,8 @@ Route::middleware('jwt.auth')->group(function () {
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
 
+//login
 Route::post('login', [AuthController::class, 'login']);
+
+//skater
+Route::post('create-skater', [SkaterController::class, 'createSkater']);

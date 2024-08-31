@@ -3,83 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\skater;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class SkaterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $skater;
+    private $user;
+
+    public function __construct(skater $skate, User $users)
     {
-        //
+        $this->skater = $skate;
+        $this->user = $users;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createSkater(Request $request): object
     {
-        //
+        try {
+            $responseUser = $this->user->createUserSkater($request);
+            if (count($responseUser) != 0) {
+                $responseSkater = $this->skater->createSkater($responseUser);
+                if (count($responseSkater) != 0) {
+                    return response()->json($responseSkater, 200);
+                }
+                return $this->error('Erro ao criar skater');
+            }
+            return $this->error('Erro ao criar user');
+        } catch (Exception $e) {
+            return $this->error($e);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function error($error): object
     {
-        //
+        return response()->json(['Error' => $error], 404);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\skater  $skater
-     * @return \Illuminate\Http\Response
-     */
-    public function show(skater $skater)
+    public function accessUnauthorized()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\skater  $skater
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(skater $skater)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\skater  $skater
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, skater $skater)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\skater  $skater
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(skater $skater)
-    {
-        //
+        return response()->json(['Error' => 'Não autorizado!'], 401);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -61,5 +62,27 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function skater()
+    {
+        return $this->hasMany(skater::class, 'fk_user');
+    }
+
+    public function createUserSkater($user): array
+    {
+        return self::create([
+            "name" => $user->name,
+            "email" => $user->email,
+            "password" => bcrypt($user->password)
+        ])->toArray();
+    }
+
+    public function getProfile(int $id): array
+    {
+        return self::where('id', $id)
+            ->with('skater')
+            ->get()
+            ->toArray();
     }
 }

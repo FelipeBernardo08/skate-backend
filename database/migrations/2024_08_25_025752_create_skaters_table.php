@@ -16,10 +16,10 @@ class CreateSkatersTable extends Migration
         Schema::create('skaters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('fone');
-            $table->string('cpf')->unique();
-            $table->string('address_city');
-            $table->string('address_neighborhood');
+            $table->string('fone')->nullable();
+            $table->string('cpf')->unique()->nullable();
+            $table->string('address_city')->nullable();
+            $table->string('address_neighborhood')->nullable();
             $table->unsignedBigInteger('fk_user');
 
             $table->foreign('fk_user')->references('id')->on('users');

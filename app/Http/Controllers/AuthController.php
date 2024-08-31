@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Models\User;
 
 class AuthController extends Controller
 {
+    private $user;
+
+    public function __construct(User $users)
+    {
+        $this->user = $users;
+    }
+
     public function login(Request $request): object
     {
         $credentials = $request->all(['email', 'password']);
@@ -45,7 +53,9 @@ class AuthController extends Controller
     public function me(): object
     {
         try {
-            return response()->json(auth()->user());
+            $me = auth()->user();
+            $profile = $this->user->getProfile($me->id);
+            return response()->json($profile, 200);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         }
