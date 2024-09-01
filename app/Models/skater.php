@@ -18,11 +18,23 @@ class skater extends Model
         'address_neighborhood'
     ];
 
-    public function createSkater($skater): array
+    public function createSkater(array $skater): array
     {
         return self::create([
             'fk_user' => $skater['id'],
             'name' => $skater['name']
         ])->toArray();
+    }
+
+    public function updateSkater(object $skater, int $id): bool
+    {
+        return self::where('id', $id)
+            ->update([
+                'name' => $skater['name'],
+                'fone' => $skater->fone,
+                'cpf' => $skater->cpf,
+                'address_city' => $skater->address_city,
+                'address_neighborhood' => $skater->address_neighborhood
+            ]);
     }
 }

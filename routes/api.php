@@ -16,14 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('jwt.auth')->group(function () {
+    //login
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('refresh', [AuthController::class, 'refresh']);
+
+    Route::patch('update-skater', [SkaterController::class, 'updateSkater']);
 });
 
 //login

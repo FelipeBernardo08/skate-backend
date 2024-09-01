@@ -50,12 +50,12 @@ class AuthController extends Controller
         }
     }
 
-    public function me(): object
+    public function me(): array
     {
         try {
             $me = auth()->user();
             $profile = $this->user->getProfile($me->id);
-            return response()->json($profile, 200);
+            return $profile;
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         }
