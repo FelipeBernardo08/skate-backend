@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageProfileController;
+use App\Http\Controllers\LocalController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SkaterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +25,25 @@ Route::middleware('jwt.auth')->group(function () {
     Route::post('me', [AuthController::class, 'me']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 
+    //skater
     Route::patch('update-skater', [SkaterController::class, 'updateSkater']);
+
+    //local
+    Route::post('create-local', [LocalController::class, 'createLocal']);
+    Route::put('update-local/{id}', [LocalController::class, 'updateLocal']);
+    Route::get('read-locals', [LocalController::class, 'readLocals']);
+    Route::get('read-local/{id}', [LocalController::class, 'readLocalId']);
+
+    //product
+    Route::get('read-products', [ProductController::class, 'readProducts']);
+    Route::get('read-product/{id}', [ProductController::class, 'readProductId']);
+    Route::get('read-own-products', [ProductController::class, 'readOwnProducts']);
+    Route::post('create-product', [ProductController::class, 'createProduct']);
+    Route::put('update-product/{id}', [ProductController::class, 'updateProduct']);
+    Route::patch('desactive-product/{id}', [ProductController::class, 'desactiveProduct']);
+
+    //imgProfile
+    Route::post('create-image', [ImageProfileController::class, 'createImageProfile']);
 });
 
 //login

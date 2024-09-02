@@ -4,82 +4,64 @@ namespace App\Http\Controllers;
 
 use App\Models\local;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 
 class LocalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $local;
+    private $auth;
+
+    public function __construct(local $locals, AuthController $authController)
     {
-        //
+        $this->local = $locals;
+        $this->auth = $authController;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function readLocals(): object
     {
-        //
+        $responseLocal = $this->local->readLocals();
+        if (count($responseLocal) != 0) {
+            return response()->json($responseLocal, 200);
+        }
+        return $this->error('Nenhum registro encontrado!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function readLocalId(int $id): object
     {
-        //
+        $responseLocal = $this->local->readLocalId($id);
+        if (count($responseLocal) != 0) {
+            return response()->json($responseLocal, 200);
+        }
+        return $this->error('Nenhum registro encontrado!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\local  $local
-     * @return \Illuminate\Http\Response
-     */
-    public function show(local $local)
+    public function createLocal(Request $request): object
     {
-        //
+        $me = $this->auth->me();
+        $responseLocal = $this->local->createLocal($request, $me[0]['skater'][0]['id']);
+        if (count($responseLocal) != 0) {
+            return response()->json($responseLocal, 200);
+        }
+        return $this->error('Registro não pode ser criado!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\local  $local
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(local $local)
+    public function updateLocal(Request $request, int $id): object
     {
-        //
+        $me = $this->auth->me();
+        $responseLocal = $this->local->updateLocal($request, $id, $me[0]['skater'][0]['id']);
+        if ($responseLocal) {
+            return response()->json(['msg' => 'Registro atualizado com sucesso!'], 200);
+        }
+        return $this->error('Registro não pode ser atualizado!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\local  $local
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, local $local)
+    public function error($error): object
     {
-        //
+        return response()->json(['Error' => $error], 404);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\local  $local
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(local $local)
+    public function accessUnauthorized()
     {
-        //
+        return response()->json(['Error' => 'Não autorizado!'], 401);
     }
 }

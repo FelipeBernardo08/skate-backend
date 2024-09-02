@@ -4,82 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\imageProfile;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+
 
 class ImageProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $imageProfile;
+    private $auth;
+
+    public function __construct(AuthController $authController, imageProfile $image)
     {
-        //
+        $this->imageProfile = $image;
+        $this->auth = $authController;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createImageProfile(Request $request): object
     {
-        //
+        $me = $this->auth->me();
+        $responseImg = $this->imageProfile->createImageProfile($request, $me[0]['skater'][0]['id']);
+        if (count($responseImg) != 0) {
+            return response()->json($responseImg, 200);
+        }
+        return $this->error('Registro não pode ser criado!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function delete(Request $request)
     {
-        //
+        $me = $this->auth->me();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\imageProfile  $imageProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function show(imageProfile $imageProfile)
+    public function error($error): object
     {
-        //
+        return response()->json(['Error' => $error], 404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\imageProfile  $imageProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(imageProfile $imageProfile)
+    public function accessUnauthorized()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\imageProfile  $imageProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, imageProfile $imageProfile)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\imageProfile  $imageProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(imageProfile $imageProfile)
-    {
-        //
+        return response()->json(['Error' => 'Não autorizado!'], 401);
     }
 }

@@ -30,7 +30,7 @@ class skater extends Model
     {
         return self::where('id', $id)
             ->update([
-                'name' => $skater['name'],
+                'name' => $skater->name,
                 'fone' => $skater->fone,
                 'cpf' => $skater->cpf,
                 'address_city' => $skater->address_city,

@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('announcement_type');
             $table->text('description');
+            $table->boolean('active')->default(true);
             $table->unsignedBigInteger('fk_type_product');
             $table->unsignedBigInteger('fk_subtype_product');
             $table->unsignedBigInteger('fk_skater');

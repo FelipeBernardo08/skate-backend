@@ -16,9 +16,8 @@ class CreateImageProfilesTable extends Migration
         Schema::create('image_profiles', function (Blueprint $table) {
             $table->id();
             $table->string('file_name');
-            $table->unsignedBigInteger('fk_user');
-
-            $table->foreign('fk_user')->references('id')->on('users');
+            $table->unsignedBigInteger('fk_skater');
+            $table->foreign('fk_skater')->references('id')->on('skaters');
             $table->timestamps();
         });
     }
