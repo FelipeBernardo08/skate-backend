@@ -45,9 +45,6 @@ Route::middleware('jwt.auth')->group(function () {
     //imgProfile
     Route::post('create-image-profile', [ImageProfileController::class, 'createImageProfile']);
     Route::delete('delete-image-profile/{id}', [ImageProfileController::class, 'deleteImgTicket']);
-
-    //imgProduct
-    Route::post('create-image-product/{id}', [ImageProductController::class, 'createImageProduct']);
 });
 
 //login

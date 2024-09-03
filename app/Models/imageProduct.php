@@ -21,13 +21,13 @@ class imageProduct extends Model
         return $this->belongsTo('fk_product');
     }
 
-    public function createImageProduct(object $image, int $id_product): array
+    public function createImageProduct(object $image): array
     {
         $img = $image->file('file_name');
         $caminho = $img->store('images', 'public');
         return self::create([
             'file_name' => $caminho,
-            'fk_product' => $id_product
+            'fk_product' => $image->id
         ])
             ->get()
             ->toArray();
