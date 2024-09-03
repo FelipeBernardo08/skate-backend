@@ -15,6 +15,7 @@ class product extends Model
         'active',
         'announcement_type',
         'fk_type_product',
+        'fk_subtype_product',
         'fk_skater'
     ];
 
@@ -62,6 +63,7 @@ class product extends Model
             'description' => $product->description,
             'announcement_type' => $product->announcement_type,
             'fk_type_product' => $product->fk_type_product,
+            'fk_subtype_product' => $product->fk_subtype_product,
             'fk_skater' => $id_skater
         ])->toArray();
     }

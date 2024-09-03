@@ -28,9 +28,14 @@ class ImageProfileController extends Controller
         return $this->error('Registro não pode ser criado!');
     }
 
-    public function delete(Request $request)
+    public function deleteImgTicket(int $id): object
     {
         $me = $this->auth->me();
+        $responseImg = $this->imageProfile->deleteImgTicket($id, $me[0]['skater'][0]['id']);
+        if ($responseImg) {
+            return response()->json(['msg' => 'Registro deletado com sucesso!'], 404);
+        }
+        return $this->error('Registro nao pode ser deleatdo');
     }
 
     public function error($error): object

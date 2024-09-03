@@ -82,6 +82,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return self::where('id', $id)
             ->with('skater')
+            ->with('skater.imageProfile')
             ->get()
             ->toArray();
     }

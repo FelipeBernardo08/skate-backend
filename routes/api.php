@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\ImageProfileController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SkaterController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +43,11 @@ Route::middleware('jwt.auth')->group(function () {
     Route::patch('desactive-product/{id}', [ProductController::class, 'desactiveProduct']);
 
     //imgProfile
-    Route::post('create-image', [ImageProfileController::class, 'createImageProfile']);
+    Route::post('create-image-profile', [ImageProfileController::class, 'createImageProfile']);
+    Route::delete('delete-image-profile/{id}', [ImageProfileController::class, 'deleteImgTicket']);
+
+    //imgProduct
+    Route::post('create-image-product/{id}', [ImageProductController::class, 'createImageProduct']);
 });
 
 //login

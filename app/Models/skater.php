@@ -18,6 +18,11 @@ class skater extends Model
         'address_neighborhood'
     ];
 
+    public function imageProfile()
+    {
+        return $this->hasMany(imageProfile::class, 'fk_skater');
+    }
+
     public function createSkater(array $skater): array
     {
         return self::create([
