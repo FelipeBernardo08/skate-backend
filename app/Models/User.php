@@ -86,4 +86,12 @@ class User extends Authenticatable implements JWTSubject
             ->get()
             ->toArray();
     }
+
+    public function changePassword(object $request, int $id): bool
+    {
+        return self::where('id', $id)
+            ->update([
+                'password' => bcrypt($request->password)
+            ]);
+    }
 }

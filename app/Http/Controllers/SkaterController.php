@@ -52,6 +52,20 @@ class SkaterController extends Controller
         }
     }
 
+    public function updatePassword(Request $request): object
+    {
+        try {
+            $me = $this->auth->me();
+            $response = $this->user->changePassword($request, $me[0]['id']);
+            if ($response) {
+                return response()->json(['msg' => 'Senha alterada com sucesso!'], 200);
+            }
+            return $this->error('Erro ao trocar senha!');
+        } catch (Exception $e) {
+            return $this->error($e);
+        }
+    }
+
     public function error($error): object
     {
         return response()->json(['Error' => $error], 404);

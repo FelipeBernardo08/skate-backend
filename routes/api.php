@@ -27,6 +27,7 @@ Route::middleware('jwt.auth')->group(function () {
 
     //skater
     Route::patch('update-skater', [SkaterController::class, 'updateSkater']);
+    Route::patch('update-password', [SkaterController::class, 'updatePassword']);
 
     //local
     Route::post('create-local', [LocalController::class, 'createLocal']);
