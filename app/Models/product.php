@@ -13,6 +13,8 @@ class product extends Model
         'title',
         'description',
         'active',
+        'band',
+        'size',
         'announcement_type',
         'fk_type_product',
         'fk_subtype_product',

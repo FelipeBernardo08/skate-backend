@@ -20,9 +20,6 @@ class TypeProductsSeed extends Seeder
             ],
             [
                 'name' => 'Skate'
-            ],
-            [
-                'name' => 'Roller'
             ]
         ]);
     }

@@ -16,7 +16,7 @@ class SubTypeProductsSeed extends Seeder
     {
         DB::table('subtype_products')->insert([
             [
-                'name' => 'Tenis',
+                'name' => 'Tênis',
                 'type' => 'Vestimentas'
             ],
             [
@@ -54,18 +54,6 @@ class SubTypeProductsSeed extends Seeder
             [
                 'name' => 'Acessórios',
                 'type' => 'Skate'
-            ],
-            [
-                'name' => 'Rolamento',
-                'type' => 'Roller'
-            ],
-            [
-                'name' => 'Roda',
-                'type' => 'Roller'
-            ],
-            [
-                'name' => 'Roller completo',
-                'Roller'
             ]
         ]);
     }

@@ -33,7 +33,7 @@ class ImageProfileController extends Controller
         $me = $this->auth->me();
         $responseImg = $this->imageProfile->deleteImgTicket($id, $me[0]['skater'][0]['id']);
         if ($responseImg) {
-            return response()->json(['msg' => 'Registro deletado com sucesso!'], 404);
+            return response()->json(['msg' => 'Registro deletado com sucesso!'], 200);
         }
         return $this->error('Registro nao pode ser deleatdo');
     }
