@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageLocalController;
 use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\ImageProfileController;
 use App\Http\Controllers\LocalController;
@@ -46,6 +47,9 @@ Route::middleware('jwt.auth')->group(function () {
     //imgProfile
     Route::post('create-image-profile', [ImageProfileController::class, 'createImageProfile']);
     Route::delete('delete-image-profile/{id}', [ImageProfileController::class, 'deleteImgTicket']);
+
+    //imgLocal
+    Route::post('create-image-local', [ImageLocalController::class, 'createImageLocal']);
 });
 
 //login
