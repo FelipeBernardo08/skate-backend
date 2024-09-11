@@ -49,7 +49,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::delete('delete-image-profile/{id}', [ImageProfileController::class, 'deleteImgTicket']);
 
     //imgLocal
-    Route::post('create-image-local', [ImageLocalController::class, 'createImageLocal']);
+    Route::post('create-image-local/{id}', [ImageLocalController::class, 'createImageLocal']);
 });
 
 //login

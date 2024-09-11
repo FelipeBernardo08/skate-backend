@@ -18,14 +18,13 @@ class ImageLocalController extends Controller
         $this->auth = $authController;
     }
 
-    public function createImageLocal(Request $request): object
+    public function createImageLocal(Request $request, int $id): object
     {
-        $me = $this->auth->me();
-        $responseImg = $this->image->createImageLocal($request);
-        if ($responseImg) {
+        $responseImg = $this->image->createImageLocal($request, $id);
+        if (count($responseImg) != 0) {
             return response()->json(['msg' => 'Dados criados com sucesso!'], 200);
         } else {
-            return $this->error('Dados não foram criados!');
+            return $this->error('Erro');
         }
     }
 
