@@ -35,6 +35,7 @@ class local extends Model
     public function readLocals(): array
     {
         return self::with('skater')
+            ->with('skater.imageProfile')
             ->with('images')
             ->get()
             ->toArray();
@@ -45,6 +46,7 @@ class local extends Model
         return self::where('id', $id)
             ->with('images')
             ->with('skater')
+            ->with('skater.imageProfile')
             ->get()
             ->toArray();
     }
