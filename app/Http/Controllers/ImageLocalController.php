@@ -28,7 +28,6 @@ class ImageLocalController extends Controller
         }
     }
 
-
     public function error($error): object
     {
         return response()->json(['Error' => $error], 404);

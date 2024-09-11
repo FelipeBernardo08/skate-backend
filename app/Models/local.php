@@ -27,9 +27,15 @@ class local extends Model
         return $this->belongsTo(skater::class, 'fk_skater');
     }
 
+    public function images()
+    {
+        return $this->hasMany(imageLocal::class, 'fk_local');
+    }
+
     public function readLocals(): array
     {
         return self::with('skater')
+            ->with('images')
             ->get()
             ->toArray();
     }
@@ -37,6 +43,7 @@ class local extends Model
     public function readLocalId(int $id): array
     {
         return self::where('id', $id)
+            ->with('images')
             ->with('skater')
             ->get()
             ->toArray();

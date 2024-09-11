@@ -33,8 +33,6 @@ Route::middleware('jwt.auth')->group(function () {
     //local
     Route::post('create-local', [LocalController::class, 'createLocal']);
     Route::put('update-local/{id}', [LocalController::class, 'updateLocal']);
-    Route::get('read-locals', [LocalController::class, 'readLocals']);
-    Route::get('read-local/{id}', [LocalController::class, 'readLocalId']);
 
     //product
     Route::get('read-products', [ProductController::class, 'readProducts']);
@@ -57,3 +55,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 //skater
 Route::post('create-skater', [SkaterController::class, 'createSkater']);
+
+//local
+Route::get('read-locals', [LocalController::class, 'readLocals']);
+Route::get('read-local/{id}', [LocalController::class, 'readLocalId']);
