@@ -16,7 +16,7 @@ class CreateLikesLocalsTable extends Migration
         Schema::create('likes_locals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fk_local');
-            $table->unsignedBigInteger('fk_skater');
+            $table->unsignedBigInteger('fk_skater')->unique();
 
             $table->foreign('fk_local')->references('id')->on('locals');
             $table->foreign('fk_skater')->references('id')->on('skaters');

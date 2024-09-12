@@ -4,82 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\likesLocal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+
 
 class LikesLocalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $likesLocal;
+    private $auth;
+
+    public function __construct(likesLocal $likes, AuthController $authController)
     {
-        //
+        $this->likesLocal = $likes;
+        $this->auth = $authController;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createLike(Request $request): object
     {
-        //
+        $me = $this->auth->me();
+        if ($me) {
+            $responseLike = $this->likesLocal->createLike($request, $me[0]['skater'][0]['id']);
+            if (count($responseLike) != 0) {
+                return response()->json($responseLike, 200);
+            }
+            return $this->error('Registro não pode ser inserido. Tente novamente mais tarde!');
+        } else {
+            return $this->accessUnauthorized();
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function error($error): object
     {
-        //
+        return response()->json(['Error' => $error], 404);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\likesLocal  $likesLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(likesLocal $likesLocal)
+    public function accessUnauthorized()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\likesLocal  $likesLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(likesLocal $likesLocal)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\likesLocal  $likesLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, likesLocal $likesLocal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\likesLocal  $likesLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(likesLocal $likesLocal)
-    {
-        //
+        return response()->json(['Error' => 'Não autorizado!'], 401);
     }
 }

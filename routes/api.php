@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImageLocalController;
 use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\ImageProfileController;
+use App\Http\Controllers\LikesLocalController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SkaterController;
@@ -48,6 +49,9 @@ Route::middleware('jwt.auth')->group(function () {
 
     //imgLocal
     Route::post('create-image-local/{id}', [ImageLocalController::class, 'createImageLocal']);
+
+    //likesLocal
+    Route::post('create-like-local', [LikesLocalController::class, 'createLike']);
 });
 
 //login
