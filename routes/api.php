@@ -52,6 +52,7 @@ Route::middleware('jwt.auth')->group(function () {
 
     //likesLocal
     Route::post('create-like-local', [LikesLocalController::class, 'createLike']);
+    Route::delete('remove-like-local/{id}', [LikesLocalController::class, 'removeLike']);
 });
 
 //login

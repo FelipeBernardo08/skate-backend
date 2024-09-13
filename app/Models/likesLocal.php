@@ -31,4 +31,11 @@ class likesLocal extends Model
             'fk_local' => $request->id_local
         ])->toArray();
     }
+
+    public function removeLike(int $id, int $id_skater): bool
+    {
+        return self::where('fk_skater', $id_skater)
+            ->where('fk_local', $id)
+            ->delete();
+    }
 }

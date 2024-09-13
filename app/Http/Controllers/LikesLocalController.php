@@ -32,6 +32,16 @@ class LikesLocalController extends Controller
         }
     }
 
+    public function removeLike(int $id): object
+    {
+        $me = $this->auth->me();
+        $responseLike = $this->likesLocal->removeLike($id, $me[0]['skater'][0]['id']);
+        if ($responseLike) {
+            return response()->json(['msg' => 'Registro removido com sucesso!']);
+        }
+        return $this->error('Erro ao remover registro!');
+    }
+
     public function error($error): object
     {
         return response()->json(['Error' => $error], 404);
