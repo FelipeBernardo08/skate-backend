@@ -19,7 +19,7 @@ class CreateSkatersTable extends Migration
             $table->string('fone')->nullable();
             $table->string('cpf')->unique()->nullable();
             $table->string('address_city')->nullable();
-            $table->string('address_neighborhood')->nullable();
+            $table->string('address_estate')->nullable();
             $table->unsignedBigInteger('fk_user');
 
             $table->foreign('fk_user')->references('id')->on('users');

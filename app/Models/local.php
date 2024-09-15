@@ -32,11 +32,17 @@ class local extends Model
         return $this->hasMany(imageLocal::class, 'fk_local');
     }
 
+    public function likes()
+    {
+        return $this->hasMany(likesLocal::class, 'fk_local');
+    }
+
     public function readLocals(): array
     {
         return self::with('skater')
             ->with('skater.imageProfile')
             ->with('images')
+            ->with('likes')
             ->get()
             ->toArray();
     }
@@ -47,6 +53,7 @@ class local extends Model
             ->with('images')
             ->with('skater')
             ->with('skater.imageProfile')
+            ->with('likes')
             ->get()
             ->toArray();
     }

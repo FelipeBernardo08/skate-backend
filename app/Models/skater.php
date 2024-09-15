@@ -15,7 +15,7 @@ class skater extends Model
         'fone',
         'cpf',
         'address_city',
-        'address_neighborhood'
+        'address_estate'
     ];
 
     public function imageProfile()
@@ -39,7 +39,7 @@ class skater extends Model
                 'fone' => $skater->fone,
                 'cpf' => $skater->cpf,
                 'address_city' => $skater->address_city,
-                'address_neighborhood' => $skater->address_neighborhood
+                'address_estate' => $skater->address_estate
             ]);
     }
 }
