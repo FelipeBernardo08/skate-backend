@@ -4,82 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Models\comentsLocal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+
 
 class ComentsLocalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $comentsLocal;
+    private $auth;
+
+    public function __construct(comentsLocal $coments, AuthController $authController)
     {
-        //
+        $this->comentsLocal = $coments;
+        $this->auth = $authController;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createCommentLocal(Request $request): object
     {
-        //
+        $me = $this->auth->me();
+        $resultCommentLocal = $this->comentsLocal->createComment($request, $me[0]['skater'][0]['id']);
+        if (count($resultCommentLocal) != 0) {
+            return response()->json($resultCommentLocal, 200);
+        }
+        return $this->error('Erro ao criar registro!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function error($error): object
     {
-        //
+        return response()->json(['Error' => $error], 404);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\comentsLocal  $comentsLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(comentsLocal $comentsLocal)
+    public function accessUnauthorized()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\comentsLocal  $comentsLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(comentsLocal $comentsLocal)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\comentsLocal  $comentsLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, comentsLocal $comentsLocal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\comentsLocal  $comentsLocal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(comentsLocal $comentsLocal)
-    {
-        //
+        return response()->json(['Error' => 'Não autorizado!'], 401);
     }
 }
