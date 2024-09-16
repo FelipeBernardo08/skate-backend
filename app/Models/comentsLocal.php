@@ -32,10 +32,9 @@ class comentsLocal extends Model
     {
         date_default_timezone_set('America/Sao_Paulo');
         $date = new DateTime();
-        $dateString = $date->format('Y-m-d');
         return self::create([
             'coment' => $request->coment,
-            'date' => $dateString,
+            'date' => $date,
             'fk_local' => $request->id_local,
             'fk_skater' => $id_skater
         ])->toArray();
