@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComentsLocalController;
 use App\Http\Controllers\ImageLocalController;
 use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\ImageProfileController;
@@ -53,6 +54,9 @@ Route::middleware('jwt.auth')->group(function () {
     //likesLocal
     Route::post('create-like-local', [LikesLocalController::class, 'createLike']);
     Route::delete('remove-like-local/{id}', [LikesLocalController::class, 'removeLike']);
+
+    //commentsLocal
+    Route::post('create-comment-local', [ComentsLocalController::class, 'createCommentLocal']);
 });
 
 //login
