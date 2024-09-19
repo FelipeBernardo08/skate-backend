@@ -10,10 +10,9 @@ class product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
         'description',
         'active',
-        'band',
+        'brand',
         'size',
         'announcement_type',
         'fk_type_product',
@@ -61,7 +60,6 @@ class product extends Model
     public function createProduct(object $product, int $id_skater): array
     {
         return self::create([
-            'title' => $product->title,
             'description' => $product->description,
             'announcement_type' => $product->announcement_type,
             'fk_type_product' => $product->fk_type_product,
@@ -75,7 +73,6 @@ class product extends Model
         return self::where('id', $id)
             ->where('fk_skater', $id_skater)
             ->update([
-                'title' => $product->title,
                 'description' => $product->description,
                 'announcement_type' => $product->announcement_type,
                 'fk_type_product' => $product->fk_type_product

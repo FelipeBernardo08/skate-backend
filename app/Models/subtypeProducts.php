@@ -13,4 +13,11 @@ class subtypeProducts extends Model
         'name',
         'type'
     ];
+
+    public function getSubtype(string $request): array
+    {
+        return self::where('type', $request)
+            ->get()
+            ->toArray();
+    }
 }

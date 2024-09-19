@@ -27,6 +27,6 @@ class imageLocal extends Model
         return self::create([
             'file_name' => $caminho,
             'fk_local' => $id
-        ])->toArray();
+        ])->get()->toArray();
     }
 }

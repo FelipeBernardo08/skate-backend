@@ -9,6 +9,8 @@ use App\Http\Controllers\LikesLocalController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SkaterController;
+use App\Http\Controllers\SubtypeProductsController;
+use App\Http\Controllers\TypeProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +51,10 @@ Route::middleware('jwt.auth')->group(function () {
     Route::delete('delete-image-profile/{id}', [ImageProfileController::class, 'deleteImgTicket']);
 
     //imgLocal
-    Route::post('create-image-local/{id}', [ImageLocalController::class, 'createImageLocal']);
+    Route::post('create-image-local/{id}', [ImageProductController::class, 'createImageLocal']);
+
+    //imgProduct
+    Route::post('create-image-product/{id}', [ImageLocalController::class, 'createImageProduct']);
 
     //likesLocal
     Route::post('create-like-local', [LikesLocalController::class, 'createLike']);
@@ -57,6 +62,12 @@ Route::middleware('jwt.auth')->group(function () {
 
     //commentsLocal
     Route::post('create-comment-local', [ComentsLocalController::class, 'createCommentLocal']);
+
+    //typeProducts
+    Route::get('get-type-products', [TypeProductsController::class, 'getTypes']);
+
+    //subTypeProducts
+    Route::get('get-subtype-products/{type}', [SubtypeProductsController::class, 'getSubtype']);
 });
 
 //login
