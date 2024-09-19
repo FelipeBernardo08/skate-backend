@@ -80,3 +80,5 @@ Route::get('read-locals', [LocalController::class, 'readLocals']);
 
 //product
 Route::get('read-products', [ProductController::class, 'readProducts']);
+
+//
