@@ -10,10 +10,9 @@ class product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
         'description',
         'active',
-        'band',
+        'brand',
         'size',
         'announcement_type',
         'fk_type_product',
@@ -26,16 +25,29 @@ class product extends Model
         return $this->belongsTo(typeProducts::class, 'fk_type_product');
     }
 
+    public function subType()
+    {
+        return $this->belongsTo(subtypeProducts::class, 'fk_subtype_product');
+    }
+
     public function skater()
     {
         return $this->belongsTo(skater::class, 'fk_skater');
+    }
+
+    public function imageProduct()
+    {
+        return $this->hasMany(imageProduct::class, 'fk_product');
     }
 
     public function readProducts(): array
     {
         return self::where('active', true)
             ->with('type')
+            ->with('subType')
+            ->with('imageProduct')
             ->with('skater')
+            ->with('skater.imageProfile')
             ->get()
             ->toArray();
     }
@@ -61,8 +73,9 @@ class product extends Model
     public function createProduct(object $product, int $id_skater): array
     {
         return self::create([
-            'title' => $product->title,
             'description' => $product->description,
+            'brand' => $product->brand,
+            'size' => $product->size,
             'announcement_type' => $product->announcement_type,
             'fk_type_product' => $product->fk_type_product,
             'fk_subtype_product' => $product->fk_subtype_product,
@@ -75,7 +88,6 @@ class product extends Model
         return self::where('id', $id)
             ->where('fk_skater', $id_skater)
             ->update([
-                'title' => $product->title,
                 'description' => $product->description,
                 'announcement_type' => $product->announcement_type,
                 'fk_type_product' => $product->fk_type_product
