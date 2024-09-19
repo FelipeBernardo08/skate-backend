@@ -12,4 +12,9 @@ class typeProducts extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function getTypes(): array
+    {
+        return self::get()->toArray();
+    }
 }

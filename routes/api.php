@@ -9,6 +9,8 @@ use App\Http\Controllers\LikesLocalController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SkaterController;
+use App\Http\Controllers\SubtypeProductsController;
+use App\Http\Controllers\TypeProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +39,6 @@ Route::middleware('jwt.auth')->group(function () {
     Route::put('update-local/{id}', [LocalController::class, 'updateLocal']);
 
     //product
-    Route::get('read-products', [ProductController::class, 'readProducts']);
     Route::get('read-product/{id}', [ProductController::class, 'readProductId']);
     Route::get('read-own-products', [ProductController::class, 'readOwnProducts']);
     Route::post('create-product', [ProductController::class, 'createProduct']);
@@ -51,12 +52,21 @@ Route::middleware('jwt.auth')->group(function () {
     //imgLocal
     Route::post('create-image-local/{id}', [ImageLocalController::class, 'createImageLocal']);
 
+    //imgProduct
+    Route::post('create-image-product/{id}', [ImageProductController::class, 'createImageProduct']);
+
     //likesLocal
     Route::post('create-like-local', [LikesLocalController::class, 'createLike']);
     Route::delete('remove-like-local/{id}', [LikesLocalController::class, 'removeLike']);
 
     //commentsLocal
     Route::post('create-comment-local', [ComentsLocalController::class, 'createCommentLocal']);
+
+    //typeProducts
+    Route::get('get-type-products', [TypeProductsController::class, 'getTypes']);
+
+    //subTypeProducts
+    Route::get('get-subtype-products/{type}', [SubtypeProductsController::class, 'getSubtype']);
 });
 
 //login
@@ -67,4 +77,6 @@ Route::post('create-skater', [SkaterController::class, 'createSkater']);
 
 //local
 Route::get('read-locals', [LocalController::class, 'readLocals']);
-Route::get('read-local/{id}', [LocalController::class, 'readLocalId']);
+
+//product
+Route::get('read-products', [ProductController::class, 'readProducts']);
