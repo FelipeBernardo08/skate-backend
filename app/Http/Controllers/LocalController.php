@@ -35,6 +35,16 @@ class LocalController extends Controller
         return $this->error('Nenhum registro encontrado!');
     }
 
+    public function readLocalBySkaterId(): object
+    {
+        $me = $this->auth->me();
+        $responseLocal = $this->local->readLocalBySkaterId($me[0]['skater'][0]['id']);
+        if (count($responseLocal) != 0) {
+            return response()->json($responseLocal, 200);
+        }
+        return $this->error('Registros não encontrados!');
+    }
+
     public function createLocal(Request $request): object
     {
         $me = $this->auth->me();

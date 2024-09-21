@@ -37,6 +37,7 @@ Route::middleware('jwt.auth')->group(function () {
     //local
     Route::post('create-local', [LocalController::class, 'createLocal']);
     Route::put('update-local/{id}', [LocalController::class, 'updateLocal']);
+    Route::get('read-local-by-skater', [LocalController::class, 'readLocalBySkaterId']);
 
     //product
     Route::get('read-product/{id}', [ProductController::class, 'readProductId']);
