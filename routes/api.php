@@ -38,6 +38,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::post('create-local', [LocalController::class, 'createLocal']);
     Route::put('update-local/{id}', [LocalController::class, 'updateLocal']);
     Route::get('read-local-by-skater', [LocalController::class, 'readLocalBySkaterId']);
+    Route::get('read-local-by-skater/{id}', [LocalController::class, 'readLocalByIdForSkater']);
 
     //product
     Route::get('read-product/{id}', [ProductController::class, 'readProductId']);
@@ -52,6 +53,7 @@ Route::middleware('jwt.auth')->group(function () {
 
     //imgLocal
     Route::post('create-image-local/{id}', [ImageLocalController::class, 'createImageLocal']);
+    Route::delete('delete-image-local/{id}', [ImageLocalController::class, 'deleteImage']);
 
     //imgProduct
     Route::post('create-image-product/{id}', [ImageProductController::class, 'createImageProduct']);

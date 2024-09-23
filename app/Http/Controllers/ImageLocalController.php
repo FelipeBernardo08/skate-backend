@@ -20,12 +20,23 @@ class ImageLocalController extends Controller
 
     public function createImageLocal(Request $request, int $id): object
     {
-        $responseImg = $this->image->createImageLocal($request, $id);
+        $me = $this->auth->me();
+        $responseImg = $this->image->createImageLocal($request, $id, $me[0]['skater'][0]['id']);
         if (count($responseImg) != 0) {
             return response()->json(['msg' => 'Dados criados com sucesso!'], 200);
         } else {
             return $this->error('Erro');
         }
+    }
+
+    public function deleteImage(int $id): object
+    {
+        $me = $this->auth->me();
+        $responseImg = $this->image->deleteImage($id, $me[0]['skater'][0]['id']);
+        if ($responseImg) {
+            return response()->json(['msg' => 'Registro excluído com sucesso!'], 200);
+        }
+        return $this->error('erro ao excluir registro');
     }
 
     public function error($error): object
