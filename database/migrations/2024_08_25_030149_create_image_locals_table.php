@@ -17,8 +17,10 @@ class CreateImageLocalsTable extends Migration
             $table->id();
             $table->string('file_name');
             $table->unsignedBigInteger('fk_local');
+            $table->unsignedBigInteger('fk_skater');
 
             $table->foreign('fk_local')->references('id')->on('locals');
+            $table->foreign('fk_skater')->references('id')->on('skaters');
             $table->timestamps();
         });
     }

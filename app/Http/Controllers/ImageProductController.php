@@ -19,7 +19,8 @@ class ImageProductController extends Controller
 
     public function createImageProduct(Request $request, int $id): object
     {
-        $responseImg = $this->imageProduct->createImageProduct($request, $id);
+        $me = $this->auth->me();
+        $responseImg = $this->imageProduct->createImageProduct($request, $id, $me[0]['skater'][0]['id']);
         if (count($responseImg) != 0) {
             return response()->json(['msg' => 'Dados criados com sucesso!'], 200);
         } else {
