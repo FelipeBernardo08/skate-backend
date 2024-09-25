@@ -17,8 +17,10 @@ class CreateImageProductsTable extends Migration
             $table->id();
             $table->string('file_name');
             $table->unsignedBigInteger('fk_product');
+            $table->unsignedBigInteger('fk_skater');
 
             $table->foreign('fk_product')->references('id')->on('products');
+            $table->foreign('fk_skater')->references('id')->on('skaters');
             $table->timestamps();
         });
     }

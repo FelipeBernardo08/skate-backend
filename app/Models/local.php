@@ -55,6 +55,39 @@ class local extends Model
             ->toArray();
     }
 
+    public function readLocalBySkaterId(int $id_skater): array
+    {
+        return self::where('fk_skater', $id_skater)
+            ->with('images')
+            ->get()
+            ->toArray();
+    }
+
+    public function  readLocalByIdForSkater(int $id, int $id_skater): array
+    {
+        return self::where('id', $id)
+            ->where('fk_skater', $id_skater)
+            ->with('images')
+            ->get()
+            ->toArray();
+    }
+
+    public function updateBySkaterId(object $request, int $id, int $id_skater): bool
+    {
+        return self::where('id', $id)
+            ->where('fk_skater', $id_skater)
+            ->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'access' => $request->access,
+                'address_street' => $request->address_street,
+                'address_number' => $request->address_number,
+                'address_neighborhood' => $request->address_neighborhood,
+                'address_city' => $request->address_city,
+                'address_estate' => $request->address_estate,
+            ]);
+    }
+
     public function readLocalId(int $id): array
     {
         return self::where('id', $id)
