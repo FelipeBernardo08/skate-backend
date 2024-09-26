@@ -5,6 +5,7 @@ namespace App\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class imageLocal extends Model
 {
@@ -34,8 +35,18 @@ class imageLocal extends Model
 
     public function deleteImage(int $id, int $id_skater): bool
     {
-        return self::where('id', $id)
+        $img = self::where('id', $id)
             ->where('fk_skater', $id_skater)
-            ->delete();
+            ->get()
+            ->toArray();
+
+        if (count($img) != 0) {
+            Storage::disk('public')->delete($img[0]['file_name']);
+            return self::where('id', $id)
+                ->where('fk_skater', $id_skater)
+                ->delete();
+        }
+
+        return false;
     }
 }
