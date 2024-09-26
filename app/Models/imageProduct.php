@@ -14,7 +14,7 @@ class imageProduct extends Model
     protected $fillable = [
         'file_name',
         'fk_product',
-        'fk_skater``'
+        'fk_skater'
     ];
 
     public function product()
