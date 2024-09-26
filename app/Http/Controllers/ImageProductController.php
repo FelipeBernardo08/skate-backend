@@ -28,6 +28,16 @@ class ImageProductController extends Controller
         }
     }
 
+    public function deleteImage(int $id): object
+    {
+        $me = $this->auth->me();
+        $responseImg = $this->imageProduct->deleteImgProduct($id, $me[0]['skater'][0]['id']);
+        if ($responseImg) {
+            return response()->json(['msg' => 'Registro excluído com sucesso!'], 200);
+        }
+        return $this->error('erro ao excluir registro');
+    }
+
     public function error($error): object
     {
         return response()->json(['Error' => $error], 404);

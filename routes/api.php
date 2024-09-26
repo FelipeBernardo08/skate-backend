@@ -47,6 +47,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::post('create-product', [ProductController::class, 'createProduct']);
     Route::put('update-product/{id}', [ProductController::class, 'updateProduct']);
     Route::patch('desactive-product/{id}', [ProductController::class, 'desactiveProduct']);
+    Route::patch('active-product/{id}', [ProductController::class, 'enableProduct']);
 
     //imgProfile
     Route::post('create-image-profile', [ImageProfileController::class, 'createImageProfile']);
@@ -58,6 +59,7 @@ Route::middleware('jwt.auth')->group(function () {
 
     //imgProduct
     Route::post('create-image-product/{id}', [ImageProductController::class, 'createImageProduct']);
+    Route::delete('delete-image-product/{id}', [ImageProductController::class, 'deleteImage']);
 
     //likesLocal
     Route::post('create-like-local', [LikesLocalController::class, 'createLike']);

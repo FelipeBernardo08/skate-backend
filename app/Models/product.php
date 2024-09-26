@@ -48,6 +48,7 @@ class product extends Model
     public function readProducts(): array
     {
         return self::where('active', true)
+            ->where('active', true)
             ->with('type')
             ->with('subType')
             ->with('imageProduct')
@@ -58,12 +59,14 @@ class product extends Model
             ->toArray();
     }
 
-    public function readProductId(int $id): array
+    public function readProductId(int $id, int $id_skater): array
     {
         return self::where('id', $id)
-            ->where('active', true)
-            ->with('type')
+            ->where('fk_skater', $id_skater)
             ->with('skater')
+            ->with('type')
+            ->with('subType')
+            ->with('imageProduct')
             ->get()
             ->toArray();
     }
@@ -71,7 +74,10 @@ class product extends Model
     public function readOwnProducts(int $id_skater): array
     {
         return self::where('fk_skater', $id_skater)
+            ->with('skater')
             ->with('type')
+            ->with('subType')
+            ->with('imageProduct')
             ->get()
             ->toArray();
     }
@@ -95,8 +101,11 @@ class product extends Model
             ->where('fk_skater', $id_skater)
             ->update([
                 'description' => $product->description,
+                'brand' => $product->brand,
+                'size' => $product->size,
                 'announcement_type' => $product->announcement_type,
-                'fk_type_product' => $product->fk_type_product
+                'fk_type_product' => $product->fk_type_product,
+                'fk_subtype_product' => $product->fk_subtype_product,
             ]);
     }
 
@@ -106,6 +115,15 @@ class product extends Model
             ->where('fk_skater', $id_skater)
             ->update([
                 'active' => false
+            ]);
+    }
+
+    public function enableProduct(int $id, int $id_skater): bool
+    {
+        return self::where('id', $id)
+            ->where('fk_skater', $id_skater)
+            ->update([
+                'active' => true
             ]);
     }
 }
