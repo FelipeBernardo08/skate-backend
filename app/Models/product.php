@@ -40,6 +40,11 @@ class product extends Model
         return $this->hasMany(imageProduct::class, 'fk_product');
     }
 
+    public function likes()
+    {
+        return $this->hasMany(LikesProduct::class, 'fk_product');
+    }
+
     public function readProducts(): array
     {
         return self::where('active', true)
@@ -48,6 +53,7 @@ class product extends Model
             ->with('imageProduct')
             ->with('skater')
             ->with('skater.imageProfile')
+            ->with('likes')
             ->get()
             ->toArray();
     }
