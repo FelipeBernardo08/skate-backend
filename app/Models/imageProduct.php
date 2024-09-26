@@ -35,19 +35,20 @@ class imageProduct extends Model
             ->toArray();
     }
 
-    public function deleteImgTicket(int $id, int $id_product): bool
+    public function deleteImgProduct(int $id, int $id_skater): bool
     {
         $img = self::where('id', $id)
-            ->where('fk_product', $id_product)
+            ->where('fk_skater', $id_skater)
             ->get()
             ->toArray();
 
         if (count($img) != 0) {
             Storage::disk('public')->delete($img[0]['file_name']);
             return self::where('id', $id)
-                ->where('fk_product', $id_product)
+                ->where('fk_skater', $id_skater)
                 ->delete();
         }
+
         return false;
     }
 }

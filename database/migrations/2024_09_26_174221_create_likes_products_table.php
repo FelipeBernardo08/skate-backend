@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComentsProductsTable extends Migration
+class CreateLikesProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class CreateComentsProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('coments_products', function (Blueprint $table) {
+        Schema::create('likes_products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('fk_product');
+            $table->unsignedBigInteger('fk_skater');
+
+            $table->foreign('fk_product')->references('id')->on('products');
+            $table->foreign('fk_skater')->references('id')->on('skaters');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateComentsProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coments_products');
+        Schema::dropIfExists('likes_products');
     }
 }

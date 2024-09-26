@@ -6,6 +6,7 @@ use App\Http\Controllers\ImageLocalController;
 use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\ImageProfileController;
 use App\Http\Controllers\LikesLocalController;
+use App\Http\Controllers\LikesProductController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SkaterController;
@@ -46,6 +47,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::post('create-product', [ProductController::class, 'createProduct']);
     Route::put('update-product/{id}', [ProductController::class, 'updateProduct']);
     Route::patch('desactive-product/{id}', [ProductController::class, 'desactiveProduct']);
+    Route::patch('active-product/{id}', [ProductController::class, 'enableProduct']);
 
     //imgProfile
     Route::post('create-image-profile', [ImageProfileController::class, 'createImageProfile']);
@@ -57,10 +59,15 @@ Route::middleware('jwt.auth')->group(function () {
 
     //imgProduct
     Route::post('create-image-product/{id}', [ImageProductController::class, 'createImageProduct']);
+    Route::delete('delete-image-product/{id}', [ImageProductController::class, 'deleteImage']);
 
     //likesLocal
     Route::post('create-like-local', [LikesLocalController::class, 'createLike']);
     Route::delete('remove-like-local/{id}', [LikesLocalController::class, 'removeLike']);
+
+    //likesProduct
+    Route::post('create-like-product', [LikesProductController::class, 'createLike']);
+    Route::delete('remove-like-product/{id}', [LikesProductController::class, 'removeLike']);
 
     //commentsLocal
     Route::post('create-comment-local', [ComentsLocalController::class, 'createCommentLocal']);

@@ -28,7 +28,8 @@ class ProductController extends Controller
 
     public function readProductId(int $id): object
     {
-        $resultProducts = $this->product->readProductId($id);
+        $me = $this->auth->me();
+        $resultProducts = $this->product->readProductId($id, $me[0]['skater'][0]['id']);
         if (count($resultProducts) != 0) {
             return response()->json($resultProducts, 200);
         }
@@ -69,6 +70,16 @@ class ProductController extends Controller
     {
         $me = $this->auth->me();
         $resultProducts = $this->product->desactiveProduct($id, $me[0]['skater'][0]['id']);
+        if ($resultProducts) {
+            return response()->json(['msg' => 'Registro desativado com sucesso!'], 200);
+        }
+        return $this->error('Registros não pode ser desativado!');
+    }
+
+    public function enableProduct(int $id): object
+    {
+        $me = $this->auth->me();
+        $resultProducts = $this->product->enableProduct($id, $me[0]['skater'][0]['id']);
         if ($resultProducts) {
             return response()->json(['msg' => 'Registro desativado com sucesso!'], 200);
         }
