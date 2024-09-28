@@ -13,7 +13,6 @@ class skater extends Model
         'fk_user',
         'name',
         'fone',
-        'cpf',
         'address_city',
         'address_estate'
     ];
@@ -37,7 +36,6 @@ class skater extends Model
             ->update([
                 'name' => $skater->name,
                 'fone' => $skater->fone,
-                'cpf' => $skater->cpf,
                 'address_city' => $skater->address_city,
                 'address_estate' => $skater->address_estate
             ]);
