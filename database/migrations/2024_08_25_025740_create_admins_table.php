@@ -19,7 +19,7 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('fone');
             $table->string('cnpj')->unique();
-
+            $table->boolean('admin')->default(true);
             $table->foreign('fk_user')->references('id')->on('users');
             $table->timestamps();
         });

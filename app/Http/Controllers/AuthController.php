@@ -8,25 +8,40 @@ use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
+use App\Models\Skater;
 
 class AuthController extends Controller
 {
     private $user;
+    private $skater;
 
-    public function __construct(User $users)
+    public function __construct(User $users, Skater $skaters)
     {
         $this->user = $users;
+        $this->skater = $skaters;
     }
 
     public function login(Request $request): object
     {
-        $credentials = $request->all(['email', 'password']);
-        $token = auth('api')->attempt($credentials);
-        if ($token) {
-            return response()->json($token, 200);
-        } else {
-            return response()->json(['error' => 'Registro nao encontrado!'], 404);
+        $user = $this->user->getUserByEmailAndPassword($request);
+        if (count($user) != 0) {
+            if ($user[0]['fk_type_user'] == 2) {
+                $skater = $this->skater->readSkaterByIdUser($user[0]['id']);
+                if ($skater[0]['active']) {
+                    $credentials = $request->all(['email', 'password']);
+                    $token = auth('api')->attempt($credentials);
+                    if ($token) {
+                        return response()->json($token, 200);
+                    } else {
+                        return response()->json(['error' => 'Registro nao encontrado!'], 404);
+                    }
+                }
+                return response()->json(['error' => 'Cadastro não está ativo'], 404);
+            } else {
+                //logict to admin
+            }
         }
+        return response()->json(['error' => 'Usuário não encontrado'], 404);
     }
 
     public function logout(): object
