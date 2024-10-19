@@ -87,8 +87,9 @@
             <a class="terms creepster-regular" href="https://ghostflip.com.br">termos e condições</a> de uso da plataforma.
         </p>
         <div class="content-button-confirm">
-            <button class="button-confirm creepster-regular">Confirmar</button>
-
+            <a href="<?php echo $data['url'] . '/' . $data['id'] . '/' . $data['email'] . '/' . $data['token'] ?>">
+                <button class="button-confirm creepster-regular">Confirmar</button>
+            </a>
         </div>
         <p class="text-info">
             Se não se cadastrou em nossa plataforma, por favor, ignore este e-mail.
