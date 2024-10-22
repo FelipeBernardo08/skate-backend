@@ -23,25 +23,28 @@ class AuthController extends Controller
 
     public function login(Request $request): object
     {
-        $user = $this->user->getUserByEmailAndPassword($request);
-        if (count($user) != 0) {
-            if ($user[0]['fk_type_user'] == 2) {
-                $skater = $this->skater->readSkaterByIdUser($user[0]['id']);
-                if ($skater[0]['active']) {
-                    $credentials = $request->all(['email', 'password']);
-                    $token = auth('api')->attempt($credentials);
-                    if ($token) {
-                        return response()->json($token, 200);
-                    } else {
-                        return response()->json(['error' => 'Registro nao encontrado!'], 404);
+        try {
+            $user = $this->user->getUserByEmailAndPassword($request);
+            if (count($user) != 0) {
+                if ($user[0]['fk_type_user'] == 2) {
+                    $skater = $this->skater->readSkaterByIdUser($user[0]['id']);
+                    if ($skater[0]['active']) {
+                        $credentials = $request->all(['email', 'password']);
+                        $token = auth('api')->attempt($credentials);
+                        if ($token) {
+                            return response()->json($token, 200);
+                        }
+                        return response()->json(['error' => 'Erro ao autenticar, acione o administrador!'], 404);
                     }
+                    return response()->json(['error' => 'Cadastro não está ativo'], 404);
+                } else {
+                    //logict to admin
                 }
-                return response()->json(['error' => 'Cadastro não está ativo'], 404);
-            } else {
-                //logict to admin
             }
+            return response()->json(['error' => 'Cadastro não encontrado'], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e], 404);
         }
-        return response()->json(['error' => 'Usuário não encontrado'], 404);
     }
 
     public function logout(): object

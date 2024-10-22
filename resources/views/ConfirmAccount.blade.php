@@ -76,15 +76,11 @@
 </head>
 
 <body>
-    <div class="header">
-        <img src="https://ghostflip.com.br/assets/3ohze2IqF09aevkCVa.webp" class="image-logo" alt="logo ghost flip">
-    </div>
-
     <div class="content">
         <h4 class="creepster-regular title">CONFIRMAR CONTA</h4>
         <p>
             A GhostFlip agradece o seu interesse em fazer parte de nossa comunidade, ao confirmar seu cadastro neste e-mail você estará de acordo com os
-            <a class="terms creepster-regular" href="https://ghostflip.com.br">termos e condições</a> de uso da plataforma.
+            <a class="terms creepster-regular" href="https://ghostflip.com.br/info">termos e condições</a> de uso da plataforma.
         </p>
         <div class="content-button-confirm">
             <a href="<?php echo $data['url'] . '/' . $data['id'] . '/' . $data['email'] . '/' . $data['token'] ?>">

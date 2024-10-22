@@ -33,26 +33,30 @@ class SkaterController extends Controller
     public function createSkater(Request $request): object
     {
         try {
-            $responseUser = $this->user->createUserSkater($request);
-            if (count($responseUser) != 0) {
-                $responseSkater = $this->skater->createSkater($responseUser);
-                $tokenConfirm = $this->tokenConfirm->createConfirmation($request);
-                if (count($responseSkater) != 0) {
-                    $data = [
-                        //url dev
-                        'url' => 'http://localhost:8000/api/activate-account',
-                        //url prod
-                        // 'url' => 'https://ghostflip.com.br:8082/api/activate-account',
-                        'id' => $responseSkater['id'],
-                        'email' => $tokenConfirm['email'],
-                        'token' => $tokenConfirm['token']
-                    ];
-                    Mail::to($request->email)->send(new ConfirmAccount($data, 'Confirmar Cadastro'));
-                    return response()->json(['msg' => 'Sucesso! Um e-mail foi enviado para o mesmo e-mail de cadastro, necessário confirmar cadastro para utilizar a plataforma'], 200);
+            $responseUserByEmail = $this->user->getUserByEmailAndPassword($request);
+            if (count($responseUserByEmail) == 0) {
+                $responseUser = $this->user->createUserSkater($request);
+                if (count($responseUser) != 0) {
+                    $responseSkater = $this->skater->createSkater($responseUser);
+                    $tokenConfirm = $this->tokenConfirm->createConfirmation($request);
+                    if (count($responseSkater) != 0) {
+                        $data = [
+                            //url dev
+                            'url' => 'http://localhost:8000/api/activate-account',
+                            //url prod
+                            // 'url' => 'https://ghostflip.com.br:8082/api/activate-account',
+                            'id' => $responseSkater['id'],
+                            'email' => $tokenConfirm['email'],
+                            'token' => $tokenConfirm['token']
+                        ];
+                        Mail::to($request->email)->send(new ConfirmAccount($data, 'Confirmar Cadastro'));
+                        return response()->json(['msg' => 'Sucesso! Um e-mail foi enviado para o mesmo e-mail de cadastro, necessário confirmar cadastro para utilizar a plataforma'], 200);
+                    }
+                    return $this->error('Erro ao criar skater');
                 }
-                return $this->error('Erro ao criar skater');
+                return $this->error('Erro ao criar user');
             }
-            return $this->error('Erro ao criar user');
+            return $this->error('Usuário já cadastrado na plataforma! Cadastre-se com outro e-mail ou recupere sua senha.');
         } catch (Exception $e) {
             return $this->error($e);
         }
@@ -93,7 +97,7 @@ class SkaterController extends Controller
             if (count($responseToken) != 0) {
                 $reponseActivateSkater = $this->skater->activateSkater($id);
                 if ($reponseActivateSkater) {
-                    return response()->json(['msg' => 'Conta ativada com sucesso!'], 200);
+                    return redirect()->route('Thankyou');
                 }
                 return $this->error('Erro ao ativar conta, tente novamente mais tarde!');
             }
