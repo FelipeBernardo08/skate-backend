@@ -84,6 +84,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 //skater
 Route::post('create-skater', [SkaterController::class, 'createSkater']);
+Route::get('activate-account/{id}/{email}/{token}', [SkaterController::class, 'confirmAccountSkater']);
 
 //local
 Route::get('read-locals', [LocalController::class, 'readLocals']);

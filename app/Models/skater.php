@@ -14,12 +14,20 @@ class skater extends Model
         'name',
         'fone',
         'address_city',
-        'address_estate'
+        'address_estate',
+        'active',
     ];
 
     public function imageProfile()
     {
         return $this->hasMany(imageProfile::class, 'fk_skater');
+    }
+
+    public function readSkaterByIdUser(int $id): array
+    {
+        return self::where('fk_user', $id)
+            ->get()
+            ->toArray();
     }
 
     public function createSkater(array $skater): array
@@ -38,6 +46,14 @@ class skater extends Model
                 'fone' => $skater->fone,
                 'address_city' => $skater->address_city,
                 'address_estate' => $skater->address_estate
+            ]);
+    }
+
+    public function activateSkater(int $id): bool
+    {
+        return self::where('id', $id)
+            ->update([
+                'active' => true
             ]);
     }
 }

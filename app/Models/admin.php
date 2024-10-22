@@ -14,5 +14,6 @@ class admin extends Model
         'name',
         'fone',
         'cnpj',
+        'active'
     ];
 }

@@ -19,8 +19,8 @@ class CreateSkatersTable extends Migration
             $table->string('fone')->nullable();
             $table->string('address_city')->nullable();
             $table->string('address_estate')->nullable();
+            $table->boolean('active')->default(false);
             $table->unsignedBigInteger('fk_user');
-
             $table->foreign('fk_user')->references('id')->on('users');
             $table->timestamps();
         });
