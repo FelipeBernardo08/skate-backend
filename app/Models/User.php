@@ -69,6 +69,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(skater::class, 'fk_user');
     }
 
+    public function admin()
+    {
+        return $this->hasMany(admin::class, 'fk_user');
+    }
+
     public function createUserSkater($user): array
     {
         return self::create([
@@ -93,5 +98,12 @@ class User extends Authenticatable implements JWTSubject
             ->update([
                 'password' => bcrypt($request->password)
             ]);
+    }
+
+    public function getUserByEmailAndPassword(object $request): array
+    {
+        return self::where('email', $request->email)
+            ->get()
+            ->toArray();
     }
 }
